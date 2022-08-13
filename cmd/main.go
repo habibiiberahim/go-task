@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/habibiiiberahim/go-task/entities"
 	"github.com/habibiiiberahim/go-task/routes"
 	"gorm.io/driver/mysql"
@@ -14,6 +15,8 @@ func main()  {
 	app := fiber.New()
 
 	db := SetupDatabase()
+
+	app.Use(cors.New())
 
 	//migrate table om database
 	db.AutoMigrate(&entities.Task{})
@@ -26,7 +29,7 @@ func main()  {
 
 func SetupDatabase() *gorm.DB {
 	//hard code database
-	dsn := "root:@tcp(127.0.0.1:3306)/go-task?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:12345678@tcp(localhost:3306)/go-task?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	
 	if err != nil {

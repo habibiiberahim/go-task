@@ -17,9 +17,9 @@ func InitTaskRoutes(db *gorm.DB, route *fiber.App)  {
 	resultsTaskService := services.NewServiceResults(resultsTaskRepository)
 	resultsTaskHandler := handlers.NewHandlerResultsTask(resultsTaskService)
 
-	resultTaskRepository := repositories.NewRepositoryResults(db)
-	resultTaskService := services.NewServiceResults(resultTaskRepository)
-	resultTaskHandler := handlers.NewHandlerResultsTask(resultTaskService)
+	resultTaskRepository := repositories.NewRepositoryResult(db)
+	resultTaskService := services.NewServiceResult(resultTaskRepository)
+	resultTaskHandler := handlers.NewHandlerResultTask(resultTaskService)
 
 	deleteTaskRepository := repositories.NewRepositoryDelete(db)
 	deleteTaskService := services.NewServiceDelete(deleteTaskRepository)
@@ -36,7 +36,7 @@ func InitTaskRoutes(db *gorm.DB, route *fiber.App)  {
 	groupRoute := route.Group("/api/v1")	
 	groupRoute.Post("/task", createTaskHandler.CreateTaskHandler)
 	groupRoute.Get("/task", resultsTaskHandler.ResultsTaskHandler)
-	groupRoute.Get("/task/:id", resultTaskHandler.ResultsTaskHandler)
+	groupRoute.Get("/task/:id", resultTaskHandler.ResultTaskHandler)
 	groupRoute.Get("/task/:id/done", doneTaskHandler.DoneTaskHandler)
 	groupRoute.Delete("/task/:id", deleteTaskHandler.DeleteTaskHandler)
 	groupRoute.Put("/task/:id", updateTaskHandler.UpdateTaskHandler)
